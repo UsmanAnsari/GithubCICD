@@ -26,6 +26,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Cache Gradle Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grant Gradle Execute Permission
         run: chmod +x gradlew
 
@@ -52,3 +62,9 @@ jobs:
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk
