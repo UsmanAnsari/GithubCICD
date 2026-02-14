@@ -10,6 +10,21 @@ android {
         version = release(36)
     }
 
+    lint {
+        abortOnError = true
+
+        htmlReport = true
+        htmlOutput = file("build/reports/lint/lint-report.html")
+
+        xmlReport = true
+        xmlOutput = file("build/reports/lint/lint-report.xml")
+
+        disable += "ContentDescription"
+
+        error += "NewApi"
+        error += "InlinedApi"
+    }
+
     defaultConfig {
         applicationId = "com.uansari.githubcicd"
         minSdk = 29
